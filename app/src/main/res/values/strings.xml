@@ -1,0 +1,49 @@
+<resources>
+    <string name="app_name">StudySync</string>
+    <string name="teacher">Teacher</string>
+    <string name="teacher_access">Access your account, Educator</string>
+    <string name="teacher_choose">Choose this if you are a </string>
+
+    <string name="start">Start</string>
+
+    <string name="student">Student</string>
+    <string name="student_access">Access your account, Learner</string>
+    <string name="student_inspire">Building Brighter Futures</string>
+    <string name="student_welcome">Enter our student login portal and unlock the door to endless possibilities. Here, education is not just about acquiring knowledge; its about discovering your passions, honing your skills, and realizing your dreams. With every lesson learned and every obstacle overcome, you are one step closer to the future you envision. Join us on this transformative journey of growth, discovery, and self-discovery</string>
+
+
+    <string name="add_more_subject">Add more subject</string>
+    <string name="add_more_student">Add more student</string>
+
+    <string name="update">Update</string>
+
+
+    <!--    1    -->
+    <string name="welcome_teacher">Welcome, Teacher</string>
+    <string name="teacher_welcome">Welcome to our teacher login portal, where knowledge meets dedication. As educator, your passion and commitment shape the minds of tomorrow leaders. With every lesson taught and every student inspired, you are paving the way for a brighter future. Together, lets empower the next generation through the transformative power of education</string>
+    <string name="teacher_inspire">Teach, Inspire, Lead</string>
+
+    <!--    2    -->
+    <string name="enter_student_name">Enter student name</string>
+    <string name="student_list">Student List</string>
+    <string name="add">Add</string>
+    <string name="done">Done</string>
+    <string name="Student_name_warning">Student name can be saved only once, So please add as many as you want now</string>
+
+    <!--    3    -->
+    <string name="here_student_list">Here is the list of students, You will edit there marks from here</string>
+
+    <!--    4    -->
+    <string name="enter_subject_name">Enter subject name</string>
+    <string name="subject_list">Subject List</string>
+    <string name="clear">Clear</string>
+    <string name="enter_excel_name">Enter Name</string>
+
+    <!--    5    -->
+    <string name="result">RESULT</string>
+    <string name="load">Load</string>
+
+    <!--    3,1  -->
+    <string name="here_subject_list">Here is the list of subjects, You can edit its marks for Kishan</string>
+    <string name="save">Save</string>
+</resources>

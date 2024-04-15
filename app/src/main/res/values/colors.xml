@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="gray">#9E9E9E</color>
+
+    <!--    theme 1     -->
+    <color name="background_pink">#FDF5FF</color>
+    <color name="light_pink">#8C4D9D</color>
+    <color name="medium_pink">#FAE0FF</color>
+    <color name="dark_pink">#F6C6FF</color>
+<!--    <color name="blue">#4664FF</color>-->
+    <color name="blue">#B180FF</color>
+    <color name="dark_blue">#2A006A</color>
+
+    <!--    theme 2     -->
+<!--    <color name="background_pink">#FFF7F0</color>-->
+<!--    <color name="light_pink">#FDE5CD</color>-->
+<!--    <color name="medium_pink">#FFDEBB</color>-->
+<!--    <color name="dark_pink">#9E7C65</color>-->
+<!--    <color name="blue">#7E6758</color>-->
+
+    <!--    theme 2     -->
+<!--    <color name="background_pink">#fff0f3</color>-->
+<!--    <color name="light_pink">#f7cad0</color>-->
+<!--    <color name="medium_pink">#fbb1bd</color>-->
+<!--    <color name="dark_pink">#ff7096</color>-->
+<!--    <color name="blue">#ff0a54</color>-->
+
+    <color name="startColor">#FBE9FF</color>
+    <color name="endColor">#1C0023</color>
+
+</resources>
