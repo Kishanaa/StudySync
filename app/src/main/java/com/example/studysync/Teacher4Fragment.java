@@ -55,7 +55,6 @@ public class Teacher4Fragment extends Fragment {
     Toast toastAnimation;
 
 
-
     public Teacher4Fragment() {
         // Required empty public constructor
     }
