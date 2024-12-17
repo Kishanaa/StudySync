@@ -12,6 +12,7 @@ import android.os.Handler;
 import android.os.storage.StorageManager;
 import android.os.storage.StorageVolume;
 import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +41,6 @@ import java.io.FileOutputStream;
 
 public class Teacher4Fragment extends Fragment {
 
-    public final static int TIMER=1500;
     DBHelper dbHelper;
     public List<Student> students=new ArrayList<>();
     public List<Integer> totalNum=new ArrayList<>();
@@ -49,9 +49,8 @@ public class Teacher4Fragment extends Fragment {
     int size;
     RecyclerView recyclerView;
     ResultAdapter resultAdapter;
-    RelativeLayout update,resetIt,createExl;
-    TextView textView,toastText;
-    LottieAnimationView lottieAnimationView,lottieAnimationLoader;
+    RelativeLayout resetIt,createExl;
+    TextView toastText;
     Toast toastAnimation;
 
 
@@ -64,75 +63,50 @@ public class Teacher4Fragment extends Fragment {
                              Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_teacher4,container,false);
         dbHelper=new DBHelper(getContext());
-        textView=view.findViewById(R.id.textView);
-        lottieAnimationView=view.findViewById(R.id.lottie);
-        lottieAnimationLoader=view.findViewById(R.id.lottie2);
+//        lottieAnimationLoader=view.findViewById(R.id.lottie2);
 
         ActivityManager activityManager=(ActivityManager)getContext().getSystemService(Context.ACTIVITY_SERVICE);
-
-
-        update=view.findViewById(R.id.update);
         resetIt=view.findViewById(R.id.reset_it);
-
         createExl=view.findViewById(R.id.create_exl);
-
         recyclerView=view.findViewById(R.id.result_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         toastAnimation=new Toast(getContext());
 
-        //        Convert the layout into View
-        View view2=getLayoutInflater().inflate(R.layout.toast_view,view.findViewById(R.id.toastView));
-        toastAnimation.setView(view2);
-//        set the text in toast
-        toastText=view2.findViewById(R.id.toast_text);
-
-//        set Toast duration
-        toastAnimation.setDuration(Toast.LENGTH_SHORT);
-
-
-
-        update.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                make lottie animation visible
-                lottieAnimationView.setVisibility(View.VISIBLE);
-                lottieAnimationView.playAnimation();
-
-//                make textView gone
-                textView.setVisibility(View.GONE);
-//                Handler
-
-                lottieAnimationLoader.setVisibility(View.VISIBLE);
-                lottieAnimationLoader.playAnimation();
-
-
-                new Handler().postDelayed(this::resetButton,TIMER);
+//                new Handler().postDelayed(this::resetButton,TIMER);
                 totalNum.clear();
                 LoadStudentName();
 //                LoadSubjectName();
                 SQLiteDatabase db=dbHelper.getReadableDatabase();
-                for (int i=1;i<=size;i++){
-                    int totalValue=dbHelper.calculateTotalValueForStudent(db,i);
-                    totalNum.add(totalValue);
-                }
+//                for (int i=1;i<=size;i++){
+//                    int totalValue=dbHelper.calculateTotalValueForStudent(db,i);
+//                    totalNum.add(totalValue);
+//                }
+
+        for (int i = 0; i < students.size(); i++) {
+            int totalValue = dbHelper.calculateTotalValueForStudent(db, students.get(i).getId());
+            totalNum.add(totalValue);
+            Log.d("DEBUG", "Added totalNum[" + i + "]: " + totalValue);
+        }
+
+        // Log the contents of totalNum and students
+        for (int i = 0; i < totalNum.size(); i++) {
+            String studentInfo = (i < students.size()) ? students.get(i).toString() : "No student data";
+            Log.d("DEBUG", "Index: " + i + ", Total Value: " + totalNum.get(i) + ", Student: " + studentInfo);
+        }
+
+        Log.d("DEBUG", "totalNum size: " + totalNum.size() + ", students size: " + students.size());
+
+        if (totalNum.size() != students.size()) {
+            throw new IllegalStateException("Mismatch between totalNum and students size.");
+        }
+
+                // Sort totalNum and students using quicksort
+                quickSort(totalNum, students, 0, totalNum.size() - 1);
+
                 resultAdapter=new ResultAdapter(getContext(),students,totalNum);
-
-            }
-
-            private void resetButton() {
-//                make lottie animation gone
-                lottieAnimationView.pauseAnimation();
-                lottieAnimationView.setVisibility(View.GONE);
-//                make Text visible
-                textView.setVisibility(View.VISIBLE);
-
-                lottieAnimationLoader.playAnimation();
-                lottieAnimationLoader.setVisibility(View.GONE);
 //                set adapter
                 recyclerView.setAdapter(resultAdapter);
-            }
-        });
 
 
         resetIt.setOnClickListener(new View.OnClickListener() {
@@ -153,15 +127,6 @@ public class Teacher4Fragment extends Fragment {
                 builder.show();
             }
         });
-
-//        List<String> stud = new ArrayList<>(Arrays.asList("A1", "B2", "C1", "DD", "A"));
-//        String[] array4 = stud.toArray(new String[0]);
-
-
-//        String[] headings = {"NAME", "TOTAL MARKS"};
-
-//        String[] array2 = {"1", "2", "3", "4"};
-//        String[] array3 = {"5", "6", "7", "8"};
 
         createExl.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -286,18 +251,37 @@ public class Teacher4Fragment extends Fragment {
         students.addAll(name); // Add students to the list
         size=name.size()+1; //We know the size of student in number form
     }
-//    private void LoadSubjectName(){
-//        subject.clear();
-//        int studentID = 1;
-//        List<String> name=dbHelper.getAllSubject(studentID);
-//        // Add "Name" at the first index
-//        subject.add("Name");
-//
-//        // Add "Total marks" at the second index
-//        subject.add("Total Marks");
-//
-//        // Add all other subject names after the first two indices
-//        subject.addAll(name);
-//    }
-
+    private void quickSort(List<Integer> totalNum, List<Student> students, int low, int high) {
+        if (low < high) {
+            int pi = partition(totalNum, students, low, high);
+            quickSort(totalNum, students, low, pi - 1); // Sort left part
+            quickSort(totalNum, students, pi + 1, high); // Sort right part
+        }
+    }
+    private int partition(List<Integer> totalNum, List<Student> students, int low, int high) {
+        int pivot = totalNum.get(high); // Pivot is the last element
+        int i = low - 1; // Index of smaller element
+        for (int j = low; j < high; j++) {
+            if (totalNum.get(j) > pivot) { // Sorting in descending order
+                i++;
+                // Swap totalNum
+                int temp = totalNum.get(i);
+                totalNum.set(i, totalNum.get(j));
+                totalNum.set(j, temp);
+                // Swap corresponding students
+                Student tempStudent = students.get(i);
+                students.set(i, students.get(j));
+                students.set(j, tempStudent);
+            }
+        }
+        // Swap totalNum[i + 1] and totalNum[high] (pivot)
+        int temp = totalNum.get(i + 1);
+        totalNum.set(i + 1, totalNum.get(high));
+        totalNum.set(high, temp);
+        // Swap corresponding students
+        Student tempStudent = students.get(i + 1);
+        students.set(i + 1, students.get(high));
+        students.set(high, tempStudent);
+        return i + 1; // Return partition index
+    }
 }

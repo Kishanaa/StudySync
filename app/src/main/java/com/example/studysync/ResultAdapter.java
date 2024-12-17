@@ -33,7 +33,7 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ResultView
     @Override
     public void onBindViewHolder(@NonNull ResultViewHolder holder, int position) {
         Student student=mStudent.get(position);
-        holder.NameTextView.setText(student.getId()+" "+student.getName());
+        holder.NameTextView.setText(student.getName());
         Integer integer=num.get(position);
         holder.MarkTextView.setText(integer.toString());
 
